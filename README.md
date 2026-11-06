@@ -27,7 +27,7 @@
 
 ## TODO
 
-- [x] **ALFWorld-Para upload**: the 6,554 paraphrases, task specs, and taxonomy definitions, in [`data/`](data/)
+- [x] **ALFWorld-Para upload**: the 6,554 paraphrases, the 226 originals, the taxonomy, and the 113 ALFWorld game files, in [`data/`](data/)
 - [ ] **Model Evaluation upload**: eval scripts and per-model setup guides
 - [ ] **BINDIntent Method upload**: the binding framework and its baselines
 - [ ] **ScienceWorld-Para upload**: cross-benchmark port of the same taxonomy and method
@@ -53,9 +53,16 @@ taxonomy.
 
 ### Dataset
 
-[`data/`](data/) is the benchmark. `alfworld_para.json` is the only file needed to run it: one
-record per paraphrase, carrying the ALFWorld game file, the original instruction, the
-paraphrase, and its cell.
+[`data/`](data/) is the benchmark, and it runs from a clone. The 113 ALFWorld game files are
+bundled, so `alfworld-download` is not needed.
+
+```bash
+pip install alfworld==0.3.3 pyyaml
+export ALFWORLD_DATA=$(pwd)/data/alfworld_data
+python data/example_run.py          # opens one episode with the paraphrase swapped in
+```
+
+`data/alfworld_para.json` holds the 6,554 paraphrases, one record per line:
 
 ```json
 {"id": "ap_0000", "gamefile": "pick_and_place_simple-Book-None-SideTable-329/trial_T20190908_050633_745514",
@@ -65,8 +72,10 @@ paraphrase, and its cell.
 ```
 
 Load the episode named by `gamefile`, swap the goal instruction for `paraphrase`, and run.
-Success is ALFWorld's own check, unchanged. Every spec appears under all 29 cells and both
-templates, so any cell, task type, or axis is a paired slice.
+Success is ALFWorld's own check, unchanged. `data/originals.json` is the `None` condition in
+the same schema, and `data/score.py` turns `{id, success}` results into the table below. Every
+spec appears under all 29 cells and both goal templates, so any cell, task type, or axis is a
+paired slice.
 
 > **Details**: [data/README.md](data/README.md)
 

@@ -1,16 +1,32 @@
 # ALFWorld-Para
 
-6,554 paraphrased goal instructions over the 226 unique instructions of the ALFWorld `seen`
-split. Only the phrasing varies; the game file, the goal state, and the success condition are
-untouched, so a paraphrase can be dropped into any ALFWorld harness in place of the original
-instruction.
+6,554 paraphrased goal instructions over the 226 original instructions of the ALFWorld `seen`
+split, with the 113 game files they run on. Only the phrasing varies; the game, the goal state,
+and ALFWorld's success check are untouched.
+
+## Quick start
+
+```bash
+pip install alfworld==0.3.3 pyyaml
+export ALFWORLD_DATA=$(pwd)/data/alfworld_data     # bundled, nothing to download
+python data/example_run.py
+```
+
+That opens one episode, swaps the goal instruction for the paraphrase, and prints what an
+agent would see. Everything the benchmark needs is in this directory.
+
+## Files
 
 | File | Rows | Contents |
 |:--|--:|:--|
-| `alfworld_para.json` | 6,554 | the dataset. One record per paraphrase, everything needed to run it. |
-| `alfworld_para.csv` | 6,554 | the same records plus slot fillers and generation provenance. |
-| `specs.json` | 113 | one entry per task spec: game file, slot fillers, and both original instructions. |
-| `taxonomy.json` | 29 cells | axis and type definitions with an example for each. |
+| `alfworld_para.json` | 6,554 | the benchmark. One record per paraphrase. |
+| `originals.json` | 226 | the `None` condition: the unparaphrased instructions, same schema. |
+| `alfworld_para.csv` | 6,554 | the paraphrase records plus slot fillers and generation provenance. |
+| `specs.json` | 113 | one entry per task spec: game file, slot fillers, both original instructions. |
+| `taxonomy.json` | 29 cells | axis and type definitions with a worked example for each. |
+| `alfworld_data/` | 113 games | the ALFWorld games, PDDL logic, and config. [Details](alfworld_data/README.md) |
+| `example_run.py` | | run one episode, no agent and no harness. |
+| `score.py` | | turn `{id, success}` results into the paper's table. |
 
 ## Record
 
@@ -33,22 +49,31 @@ instruction.
 
 | Field | Meaning |
 |:--|:--|
-| `gamefile` | ALFWorld game file, relative to `$ALFWORLD_DATA/json_2.1.1/valid_seen`. Identifies the episode. |
+| `gamefile` | game directory under `alfworld_data/json_2.1.1/valid_seen`. Identifies the episode. |
 | `task_type` | one of `pick`, `pick2`, `clean`, `heat`, `cool`, `look` |
 | `spec_id` | task spec, 0 to 112. One spec is one game file with one set of slot fillers. |
 | `template_id` | `t0` or `t1`, the two ALFWorld goal templates for that task type |
 | `axis` | `obj`, `act`, or `obj x act` |
 | `cell` | paraphrase type, one of the 29 in `taxonomy.json` |
 | `object_type`, `action_type` | the cell split per axis. `none` means that axis is unchanged. |
-| `original` | the untouched ALFWorld instruction, the `None` condition |
-| `paraphrase` | the instruction to evaluate |
+| `original` | the untouched ALFWorld instruction for this spec and template |
+| `paraphrase` | the instruction to evaluate. In `originals.json` it equals `original`. |
 | `max_steps` | step budget used in the paper |
 
 ## Running it
 
 Load the episode named by `gamefile`, replace the goal instruction with `paraphrase`, and run
-for `max_steps`. Success is ALFWorld's own check, unchanged. For the `None` baseline, run the
-same episode with `original`.
+for `max_steps`. Success is ALFWorld's own check.
+
+**The instruction is always overridden, including in the `None` condition.** ALFWorld emits
+only one of its two goal templates per game, 60 games under `t0` and 53 under `t1`, while the
+benchmark evaluates both templates for every spec. So for 113 of the 226 originals the
+environment's own wording is the other template, and reading the goal out of the reset
+observation would silently evaluate something else. `example_run.py` prints both so the
+difference is visible.
+
+Each of the 113 specs appears under all 29 cells and both templates, so any cell, task type, or
+axis is a clean slice: filter and the comparison stays paired.
 
 ```python
 import json
@@ -56,8 +81,19 @@ data = json.load(open("data/alfworld_para.json"))
 same_polarity = [r for r in data if r["object_type"] == "lexical_same_polarity"]
 ```
 
-Each of the 113 specs appears under all 29 cells and both templates, so any cell, task type, or
-axis is a clean slice: filter and the comparison stays paired.
+## Scoring
+
+Write one `{"id": ..., "success": ...}` per record and pass the file to `score.py`:
+
+```bash
+python data/score.py results.jsonl                  # the headline table
+python data/score.py results.jsonl --by cell        # all 29 cells
+python data/score.py results.jsonl --by task_type
+```
+
+The headline table splits on the object axis, which is what drives the failure, and pools the
+action axis: `None` (2,034 records, object word unchanged), `Addition` (2,260), `Same-Polarity`
+(2,260). Results for `originals.json` records are reported in the `None` split as well.
 
 ## Taxonomy
 
@@ -79,11 +115,11 @@ type.
 
 Paraphrases are generated by factorization rather than per instruction. ALFWorld instructions
 are slot templates, so the 113 specs are 65 slot fillers crossed with 12 templates. Paraphrasing
-the slots and the templates separately and then composing them keeps the two axes
-structurally independent: an object-axis cell cannot touch the verb phrase, because the verb
-phrase comes from an unmodified template. It also cuts generation from 6,554 LLM calls to 238.
-The `object_axis_source` and `action_axis_source` columns of the CSV record which slot
-substitution and which template paraphrase produced each row.
+the slots and the templates separately and then composing them keeps the two axes structurally
+independent: an object-axis cell cannot touch the verb phrase, because the verb phrase comes
+from an unmodified template. It also cuts generation from 6,554 LLM calls to 238. The
+`object_axis_source` and `action_axis_source` columns of the CSV record which slot substitution
+and which template paraphrase produced each row.
 
 ## Validation
 
