@@ -27,10 +27,11 @@
 
 ## TODO
 
-- [ ] **ALFWorld-Para upload**: paraphrase dataset, taxonomy definitions, and the generation pipeline
+- [x] **ALFWorld-Para upload**: the 6,554 paraphrases, task specs, and taxonomy definitions, in [`data/`](data/)
 - [ ] **Model Evaluation upload**: eval scripts and per-model setup guides
 - [ ] **BINDIntent Method upload**: the binding framework and its baselines
 - [ ] **ScienceWorld-Para upload**: cross-benchmark port of the same taxonomy and method
+- [ ] **Paraphrase generation upload**: the LLM generator and verifier that built the dataset
 
 ---
 
@@ -48,6 +49,26 @@ instructions in the ALFWorld `seen` split is perturbed into 11 single types (2 o
 9 action) and 18 compositional ones, one per object-action pair, giving **29 paraphrase types
 and 6,554 instructions**. See the [paper](https://arxiv.org/abs/2611.07599) for the full
 taxonomy.
+
+
+### Dataset
+
+[`data/`](data/) is the benchmark. `alfworld_para.json` is the only file needed to run it: one
+record per paraphrase, carrying the ALFWorld game file, the original instruction, the
+paraphrase, and its cell.
+
+```json
+{"id": "ap_0000", "gamefile": "pick_and_place_simple-Book-None-SideTable-329/trial_T20190908_050633_745514",
+ "task_type": "pick", "spec_id": "0", "template_id": "t0", "axis": "act",
+ "cell": "act_lexical_addition_deletion", "object_type": "none", "action_type": "lexical_addition_deletion",
+ "original": "put a book in sidetable", "paraphrase": "directly put a book in the sidetable", "max_steps": 50}
+```
+
+Load the episode named by `gamefile`, swap the goal instruction for `paraphrase`, and run.
+Success is ALFWorld's own check, unchanged. Every spec appears under all 29 cells and both
+templates, so any cell, task type, or axis is a paired slice.
+
+> **Details**: [data/README.md](data/README.md)
 
 ---
 

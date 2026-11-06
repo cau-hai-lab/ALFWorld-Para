@@ -1,0 +1,343 @@
+{
+  "name": "ALFWorld-Para",
+  "description": "Paraphrases of ALFWorld goal instructions along two independent axes. The object axis rewrites the noun phrases (object, receptacle, toggle); the action axis rewrites everything else. The axes target disjoint spans, so every object type composes with every action type.",
+  "axes": {
+    "object": {
+      "prefix": "obj",
+      "description": "Rewrites the object, receptacle, and toggle noun phrases.",
+      "types": [
+        {
+          "id": "lexical_addition_deletion",
+          "name": "Addition",
+          "category": "lexical",
+          "description": "Keep the original word and add or drop modifiers.",
+          "example": {
+            "original": "put a book in sidetable",
+            "paraphrase": "put a hardcover book in the accent side table"
+          }
+        },
+        {
+          "id": "lexical_same_polarity",
+          "name": "Same-Polarity",
+          "category": "lexical",
+          "description": "Replace the word with a co-referring expression of the same polarity.",
+          "example": {
+            "original": "put a book in sidetable",
+            "paraphrase": "put a novel in the end table"
+          }
+        }
+      ]
+    },
+    "action": {
+      "prefix": "act",
+      "description": "Rewrites the verb phrase and the sentence form, leaving the noun phrases intact.",
+      "types": [
+        {
+          "id": "lexical_addition_deletion",
+          "name": "Addition",
+          "category": "lexical",
+          "description": "Keep the original word and add or drop modifiers.",
+          "example": {
+            "original": "put a book in sidetable",
+            "paraphrase": "directly put a book in the sidetable"
+          }
+        },
+        {
+          "id": "lexical_same_polarity",
+          "name": "Same-Polarity",
+          "category": "lexical",
+          "description": "Replace the word with a co-referring expression of the same polarity.",
+          "example": {
+            "original": "put a book in sidetable",
+            "paraphrase": "set a book in the sidetable"
+          }
+        },
+        {
+          "id": "structural_coordination",
+          "name": "Coordination",
+          "category": "structural",
+          "description": "Restructure the instruction into coordinated clauses.",
+          "example": {
+            "original": "put a book in sidetable",
+            "paraphrase": "grasp a book and put it in the sidetable"
+          }
+        },
+        {
+          "id": "structural_subordination",
+          "name": "Subordination",
+          "category": "structural",
+          "description": "Restructure the instruction with a subordinate clause.",
+          "example": {
+            "original": "put a book in sidetable",
+            "paraphrase": "having found a book, put it in the sidetable"
+          }
+        },
+        {
+          "id": "pragmatical_need_statement",
+          "name": "Need",
+          "category": "pragmatic",
+          "description": "State the goal as a need rather than a command.",
+          "example": {
+            "original": "put a book in sidetable",
+            "paraphrase": "I want a book inside the sidetable."
+          }
+        },
+        {
+          "id": "pragmatical_embedded_imperative",
+          "name": "Embedded",
+          "category": "pragmatic",
+          "description": "Embed the command in a polite request.",
+          "example": {
+            "original": "put a book in sidetable",
+            "paraphrase": "Could you manage to put a book in the sidetable?"
+          }
+        },
+        {
+          "id": "pragmatical_permission_directive",
+          "name": "Permission",
+          "category": "pragmatic",
+          "description": "Phrase the command as asking permission.",
+          "example": {
+            "original": "put a book in sidetable",
+            "paraphrase": "May I get a book moved into the sidetable?"
+          }
+        },
+        {
+          "id": "pragmatical_question_directive",
+          "name": "Question",
+          "category": "pragmatic",
+          "description": "Phrase the goal as a question about its state.",
+          "example": {
+            "original": "put a book in sidetable",
+            "paraphrase": "Is the book in the sidetable yet?"
+          }
+        },
+        {
+          "id": "pragmatical_hint",
+          "name": "Hint",
+          "category": "pragmatic",
+          "description": "State the goal indirectly as a hint about the world.",
+          "example": {
+            "original": "put a book in sidetable",
+            "paraphrase": "the sidetable is currently missing a book."
+          }
+        }
+      ]
+    }
+  },
+  "cells": [
+    {
+      "cell": "act_lexical_addition_deletion",
+      "axis": "act",
+      "object_type": "none",
+      "action_type": "lexical_addition_deletion",
+      "n": 226
+    },
+    {
+      "cell": "act_lexical_same_polarity",
+      "axis": "act",
+      "object_type": "none",
+      "action_type": "lexical_same_polarity",
+      "n": 226
+    },
+    {
+      "cell": "act_pragmatical_embedded_imperative",
+      "axis": "act",
+      "object_type": "none",
+      "action_type": "pragmatical_embedded_imperative",
+      "n": 226
+    },
+    {
+      "cell": "act_pragmatical_hint",
+      "axis": "act",
+      "object_type": "none",
+      "action_type": "pragmatical_hint",
+      "n": 226
+    },
+    {
+      "cell": "act_pragmatical_need_statement",
+      "axis": "act",
+      "object_type": "none",
+      "action_type": "pragmatical_need_statement",
+      "n": 226
+    },
+    {
+      "cell": "act_pragmatical_permission_directive",
+      "axis": "act",
+      "object_type": "none",
+      "action_type": "pragmatical_permission_directive",
+      "n": 226
+    },
+    {
+      "cell": "act_pragmatical_question_directive",
+      "axis": "act",
+      "object_type": "none",
+      "action_type": "pragmatical_question_directive",
+      "n": 226
+    },
+    {
+      "cell": "act_structural_coordination",
+      "axis": "act",
+      "object_type": "none",
+      "action_type": "structural_coordination",
+      "n": 226
+    },
+    {
+      "cell": "act_structural_subordination",
+      "axis": "act",
+      "object_type": "none",
+      "action_type": "structural_subordination",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_addition_deletion",
+      "axis": "obj",
+      "object_type": "lexical_addition_deletion",
+      "action_type": "none",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_addition_deletion+act_lexical_addition_deletion",
+      "axis": "obj x act",
+      "object_type": "lexical_addition_deletion",
+      "action_type": "lexical_addition_deletion",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_addition_deletion+act_lexical_same_polarity",
+      "axis": "obj x act",
+      "object_type": "lexical_addition_deletion",
+      "action_type": "lexical_same_polarity",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_addition_deletion+act_pragmatical_embedded_imperative",
+      "axis": "obj x act",
+      "object_type": "lexical_addition_deletion",
+      "action_type": "pragmatical_embedded_imperative",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_addition_deletion+act_pragmatical_hint",
+      "axis": "obj x act",
+      "object_type": "lexical_addition_deletion",
+      "action_type": "pragmatical_hint",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_addition_deletion+act_pragmatical_need_statement",
+      "axis": "obj x act",
+      "object_type": "lexical_addition_deletion",
+      "action_type": "pragmatical_need_statement",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_addition_deletion+act_pragmatical_permission_directive",
+      "axis": "obj x act",
+      "object_type": "lexical_addition_deletion",
+      "action_type": "pragmatical_permission_directive",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_addition_deletion+act_pragmatical_question_directive",
+      "axis": "obj x act",
+      "object_type": "lexical_addition_deletion",
+      "action_type": "pragmatical_question_directive",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_addition_deletion+act_structural_coordination",
+      "axis": "obj x act",
+      "object_type": "lexical_addition_deletion",
+      "action_type": "structural_coordination",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_addition_deletion+act_structural_subordination",
+      "axis": "obj x act",
+      "object_type": "lexical_addition_deletion",
+      "action_type": "structural_subordination",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_same_polarity",
+      "axis": "obj",
+      "object_type": "lexical_same_polarity",
+      "action_type": "none",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_same_polarity+act_lexical_addition_deletion",
+      "axis": "obj x act",
+      "object_type": "lexical_same_polarity",
+      "action_type": "lexical_addition_deletion",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_same_polarity+act_lexical_same_polarity",
+      "axis": "obj x act",
+      "object_type": "lexical_same_polarity",
+      "action_type": "lexical_same_polarity",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_same_polarity+act_pragmatical_embedded_imperative",
+      "axis": "obj x act",
+      "object_type": "lexical_same_polarity",
+      "action_type": "pragmatical_embedded_imperative",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_same_polarity+act_pragmatical_hint",
+      "axis": "obj x act",
+      "object_type": "lexical_same_polarity",
+      "action_type": "pragmatical_hint",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_same_polarity+act_pragmatical_need_statement",
+      "axis": "obj x act",
+      "object_type": "lexical_same_polarity",
+      "action_type": "pragmatical_need_statement",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_same_polarity+act_pragmatical_permission_directive",
+      "axis": "obj x act",
+      "object_type": "lexical_same_polarity",
+      "action_type": "pragmatical_permission_directive",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_same_polarity+act_pragmatical_question_directive",
+      "axis": "obj x act",
+      "object_type": "lexical_same_polarity",
+      "action_type": "pragmatical_question_directive",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_same_polarity+act_structural_coordination",
+      "axis": "obj x act",
+      "object_type": "lexical_same_polarity",
+      "action_type": "structural_coordination",
+      "n": 226
+    },
+    {
+      "cell": "obj_lexical_same_polarity+act_structural_subordination",
+      "axis": "obj x act",
+      "object_type": "lexical_same_polarity",
+      "action_type": "structural_subordination",
+      "n": 226
+    }
+  ],
+  "counts": {
+    "specs": 113,
+    "templates_per_spec": 2,
+    "original_instructions": 226,
+    "single_axis_cells": 11,
+    "compositional_cells": 18,
+    "cells": 29,
+    "paraphrases_per_cell": 226,
+    "paraphrases": 6554
+  }
+}
