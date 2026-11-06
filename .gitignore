@@ -1,0 +1,32 @@
+# Placeholder. Extend as each TODO item lands.
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+*~
+
+# Experiment output
+logs/
+outputs/
+results/
+runs/
+wandb/
+
+# Model weights and embeddings
+*.pt
+*.bin
+*.safetensors
+*.h5
+
+# Large data
+*.zip
+*.tar.gz
